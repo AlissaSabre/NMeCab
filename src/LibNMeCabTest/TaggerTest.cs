@@ -73,6 +73,27 @@ namespace LibNMeCabTest
         }
 
         [Fact]
+        public void UnknownSpeech()
+        {
+            var nodes = this.tagger.Parse("今日はエヌメカブを使った");
+
+            Assert.Equal(6, nodes.Length);
+            Assert.Equal("今日", nodes[0].Surface);
+            Assert.Equal(MeCabNodeStat.Nor, nodes[0].Stat);
+            Assert.Equal("は", nodes[1].Surface);
+            Assert.Equal(MeCabNodeStat.Nor, nodes[1].Stat);
+            Assert.Equal("エヌメカブ", nodes[2].Surface);
+            Assert.NotNull(nodes[2].Feature);
+            Assert.Equal(MeCabNodeStat.Unk, nodes[2].Stat);
+            Assert.Equal("を", nodes[3].Surface);
+            Assert.Equal(MeCabNodeStat.Nor, nodes[3].Stat);
+            Assert.Equal("使っ", nodes[4].Surface);
+            Assert.Equal(MeCabNodeStat.Nor, nodes[4].Stat);
+            Assert.Equal("た", nodes[5].Surface);
+            Assert.Equal(MeCabNodeStat.Nor, nodes[5].Stat);
+        }
+
+        [Fact]
         public void NBest()
         {
             var enumerator = this.tagger.ParseNBest("すもももももももものうち").GetEnumerator();
